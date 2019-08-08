@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from './Button';
 import CreatePlayDate from './CreatePlayDate';
-import { AppContext } from './NavBar';
-import { UserContext } from './Home';
+import { AppContext } from './App';
+import { UserContext } from './App';
 
 /*
     use <AppContext.Consumer>  if inside JSX
@@ -39,39 +39,33 @@ console.log(userState);
         localStorage.clear();
     }
 
-    return (
-     /* Use  <AppContext.Consumer> only if we are going to use values from context in the JSX
-      <AppContext.Consumer>
-        { 
-            (value)=><Button clickFunction={openWindow} className="link">{value[0].label}</Button>
-        }
-      </AppContext.Consumer>
-    */
+    const openBeMemberModal = () => {
+        setState({ 
+            ...state, 
+            beMemberForm:true
+        });
+      
+    }
 
-                    <UserContext.Consumer>   
-                        {   
-                            (user) => 
-                                ( 
-                                    <> {console.log('SignupLoginWIndow',user[0].userInfo)}
-                                        
-                                        {
-                                             (user[0].userInfo != null) ?
-                                                <Button clickFunction={logoutUser} className="link">Logout</Button>
-                                                    :
-                                                <Button clickFunction={openLoginWindow} className="link">Login</Button>
-                                        }
-                                        {
-                                             (user[0].userInfo != null) ?
-                                                <Link className="link" to="/playdate">Create Play Date</Link>
-                                                   :
-                                                <Button clickFunction={openSignUpWindow} className="link">Sign Up</Button>
-                                            
-                                        }
-                                                
-                                    </>  
-                                )
-                        }            
-                    </UserContext.Consumer>    
+    return (
+        <UserContext.Consumer>   
+            {   
+                (user) => ( 
+                    <> 
+                        {
+                            (user[0].userInfo != null) ?
+                                <>
+                                    <li><Link className="nav-link" to="/user">User</Link></li>
+                                    <Button clickFunction={logoutUser} className="link">Logout</Button>
+                                </>   
+                                    :
+                                    <li><Link className="nav-link" to="/user" onClick={openBeMemberModal}>Login</Link></li>
+                               
+                        }                                
+                    </>  
+                )
+            }            
+        </UserContext.Consumer>    
 
     )
   }

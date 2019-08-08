@@ -1,13 +1,8 @@
 import React from 'react';
-import NavBar from './NavBar';
-
-
-
 
 const About = () => {
     return (
         <div className="About">
-            <NavBar />
             <div className="container">
                 <h1> About Us</h1>
                 <p>We believe thet no child should ever be bored.

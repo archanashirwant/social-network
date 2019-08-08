@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { AppContext } from './NavBar';
-import { UserContext } from './Home';
+import { Button } from 'react-bootstrap';
+import { AppContext } from './App';
+import { UserContext } from './App';
 
-const LoginWindow = () => {
+const LoginWindow = (props) => {
     
     let email;
     let password;
@@ -11,11 +12,15 @@ const LoginWindow = () => {
         successMessage:false,
         errorMessage:false
     });
+    
 
     const [state, setState] =  useContext(AppContext);
 
-    const [userState, setUserState] = useContext(UserContext);
-
+    const [userState, setUserState] = useContext(UserContext);    
+    
+        //showModal =  props.location.state.showForm;
+        
+        
     const loginUser = () => {        
 
         let formData = {
@@ -65,7 +70,7 @@ const LoginWindow = () => {
                 ...userState,
                 userInfo
              })
-
+console.log(userInfo);
              closeLogin()
         })
           .catch(err => console.log('err',err) ) // change the state of the component  
@@ -73,33 +78,33 @@ const LoginWindow = () => {
     }
 
     const closeLogin = () => {
-        setState({ loginForm:false });
-    }
+        if (typeof props.location !== 'undefined') 
+            props.location.state = false;
+        setState({ ...state,beMemberForm:false });
+        
     
+    }
+     
 
     return (
-        <div className="LoginWindow" style={{overlay: {zIndex: 3}}}>
-            <div className="container">
-                
-                <label className="">Email</label>
-                <input ref={comp => email = comp} type="text" className="form-control" />
-                
-                <label className="">Password</label>
-                <input ref={comp => password = comp} type="password" className="form-control" />
-           
-                <button onClick= {loginUser} className="btn btn-primary">Login</button>
-                <button  onClick= {closeLogin} className="btn btn-danger" >Cancel</button> 
+        <div className="container">
+            <label className="">Email</label>
+            <input ref={comp => email = comp} type="text" className="form-control" />
             
-                {
-                    localState.errorMessage &&
-                    <div className="alert alert-danger">
-                        Invalid email / passoword.Try again.
-                    </div>
-                }
-
-                    
-
-            </div>
+            <label className="">Password</label>
+            <input ref={comp => password = comp} type="password" className="form-control" />
+            
+            <hr />
+            
+            <button onClick= {loginUser} className="btn btn-primary">Login</button>    
+            <button onClick= {closeLogin} className="btn btn-danger">Cancel</button>
+            
+            {
+                localState.errorMessage &&
+                <div className="alert alert-danger">
+                    Invalid email / passoword.Try again.
+                </div>
+            }
         </div>
     )    
 

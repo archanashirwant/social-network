@@ -1,41 +1,38 @@
-import React ,{ useState , useContext, createContext } from 'react';
+import React ,{ useContext } from 'react';
 import { Route, Link } from 'react-router-dom';
 import SignUpLoginButton from './SignUpLoginButton';
 import SignUpWindow from './SignUpWindow';
 import LoginWindow from './LoginWindow';
-import { UserContext } from './Home';
+import { UserContext , AppContext } from './App';
 
-export const AppContext = createContext(); // This will create AppContext component
+//export const AppContext = createContext(); // This will create AppContext component
 
 
 const NavBar = () => {
 
-    const [ state, setState ] = useState({ signUpForm:false, loginForm:false });
-
+//    const [ state, setState ] = useState({ signUpForm:false, loginForm:false });
+    const [ state, setState ] = useContext(AppContext);
     const [ userState, setUserState ] = useContext(UserContext);
 
 
       return(
-        <AppContext.Provider value={[ state, setState ]}>
-          <div className="NavBar navbar navbar-light bg-light static-top">
-            <div className="container nav-links">
-              <Link className="logo" to="/"><h2>Logo</h2></Link>
-              <Link className="link" to="/">Home</Link>
-              <Link className="link" to="/about">About</Link>
-              { /*  <Link className="link" to="/ideas">Ideas</Link>
-              <Link className="link" to="/blog">Blog</Link>
-              <Link className="link" to="/contact">Contact</Link>
-        */ } 
+       
+          
+          <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a className="navbar-brand" href="#">
+              <img src="/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />
+            </a>
+            <ul className="navbar-nav mr-auto">
+              <li><Link to={'/'} className="nav-link"> Home </Link></li>
+              <li><Link to={'/about'} className="nav-link">About</Link></li>
               <SignUpLoginButton />
-            </div>
-            
+            </ul>
+              
+          </nav>
+          
+          
 
-
-            {state.signUpForm && <SignUpWindow />}
-            {state.loginForm && <LoginWindow />}
-
-          </div>
-        </ AppContext.Provider>
+       
     )
   }
 

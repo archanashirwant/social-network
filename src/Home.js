@@ -1,30 +1,15 @@
-import React , { useState, createContext } from 'react';
+import React from 'react';
 import { InfoGroup, Info } from './InfoGroup';
 import JigSaw from './JigSaw';
 import Slides from './Slides';
-import NavBar from './NavBar';
-
-
-
-export const UserContext = createContext(); // This will create AuthContext component
 
 const Home = () => {
-
   
-
-  let userInfo =  JSON.parse(localStorage.getItem("authUser"));
-  
-  
- // localStorage.getItem('authUser');
-
-  const [ userState, setUserState ] = useState( {userInfo} );
-
   return (
    
-      <UserContext.Provider value={[ userState, setUserState ]}>
+     
         <div className="Home">
-          <NavBar />
-          <Slides/>
+         <Slides/>
           <InfoGroup>
             <Info 
               iconClass="icon icon-screen-desktop" 
@@ -54,7 +39,7 @@ const Home = () => {
         
 
         </div>
-      </UserContext.Provider>
+     
    
   );
 }
